@@ -18,7 +18,11 @@ const data = [
 
 const generateData = (data) => {
     if (!data) return []
-    
+
+    const today = (new Date()).toDateString;
+
+    data = data.filter(({startTime}) => (new Date(startTime)).toDateString === today)
+
     const res = []
     for (let i = 0; i < 24; i++) res[i] = 0
 
@@ -32,7 +36,7 @@ const generateData = (data) => {
         const maxForHour = []
 
         for (let i = startHour; i < 24; i++) {
-            if (i === startHour) maxForHour[i] = 60 - startMinutes
+            if (i === startHour) maxForHour[i] = 60 - startMinutes - res[i]
             else maxForHour[i] = 60 - res[i]
         }
 

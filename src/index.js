@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router basename={'/task-timer'}>
       <App />
     </Router>
   </Provider>
