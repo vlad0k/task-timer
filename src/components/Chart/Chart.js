@@ -17,29 +17,36 @@ const data = [
 ]
 
 const generateData = (data) => {
-
+    if (!data) return []
+    
     const res = []
-    for (let i = 0; i < 24; i++) res.push(0)
+    for (let i = 0; i < 24; i++) res[i] = 0
 
-    data.forEach((task, i) => {
+    data.forEach( ({startTime, endTime}) => {
 
-        let startHour = +new Date(task.startTime).getHours();
-        let startMinutes = +new Date(task.startTime).getMinutes();
-        let {hours, minutes, seconds} = formatTimer(task.endTime - task.startTime - (60 - (startMinutes * 60000)));
-        hours = +hours
-        minutes = +minutes
-        seconds = +seconds
-        res[startHour] += (60 - startMinutes)
-        startHour++
-        while (hours > 0) {
-            res[startHour] += 60
-            hours--
-            startHour++
+        let startHour = (new Date(startTime)).getHours()
+        let startMinutes = (new Date(startTime)).getMinutes()
+
+        let minutes = (endTime - startTime) / 60000
+
+        const maxForHour = []
+
+        for (let i = startHour; i < 24; i++) {
+            if (i === startHour) maxForHour[i] = 60 - startMinutes
+            else maxForHour[i] = 60 - res[i]
         }
-        res[startHour] = minutes + (seconds / 60)
 
-        
+        for (let i = startHour; i < 24; i++) {
+            if ( minutes >= maxForHour[i] ) {
+                res[i] += maxForHour[i]
+                minutes -= maxForHour[i]
+            } else {
+                res[i] += minutes
+                minutes = 0
+            }
+        }
     })
+
     return res.map((minutes, hour) => ({hour: +hour, minutes: Math.ceil(minutes)}))
 }
 

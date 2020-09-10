@@ -71,13 +71,40 @@ const App = () => {
     dispatch(setTasks(newTasks))
   }
 
+  const getRandom = (min, max) => (Math.floor(Math.random() * (max - min) ) + min)
+
+  const generateTasks = () => {
+    const todayDate = (new Date( (new Date()).toDateString() )).getTime()
+    console.log(todayDate);
+    const quantity = getRandom(10, 15)
+
+    const newTasks = [] 
+
+    for (let i = 0; i < quantity; i++ ) {
+      const startTime = getRandom(0, 22.5 * 3600000)
+      const endTime = getRandom(10 * 60000, 90 * 60000)
+
+      const task = {
+        taskName: `Task ${i + 1}`,
+        startTime: todayDate + startTime,
+        endTime: todayDate + startTime + endTime
+      }
+
+      newTasks.push(task)
+    }
+
+    dispatch(setTasks(newTasks))
+  }
+
   return (
     <div className="App">
       <TextField value={taskName} onChange={(e) => dispatch(setTaskName(e.target.value))} id="standard-basic" label="Name of your task" />
       
       <Clock timer={timer.time}/>
 
-      {!startTime && <Button onClick={startTimer}>START</Button>}
+      {!startTime && <Button onClick={startTimer}>START</Button>
+
+      }
       {startTime && <Button onClick={stopTimer}>STOP</Button>}
   
       <Paper>
@@ -95,7 +122,12 @@ const App = () => {
         </Tabs>
       </Paper>
       
-      {tabsValue === 0 && <Logs tasks={tasks} deleteTask={deleteTask}/>}
+      {tabsValue === 0 && <>
+        <Logs tasks={tasks} deleteTask={deleteTask}/>
+        <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Button onClick={() => generateTasks()}>GENERATE</Button>
+        </div>
+      </>}
       {tabsValue === 1 && <Chart tasks={tasks} />}
 
       <Route path="/tasks/:id">
