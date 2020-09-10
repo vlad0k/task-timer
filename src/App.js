@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Paper } from '@material-ui/core'
+import { Paper, AppBar } from '@material-ui/core'
 import { useHistory } from "react-router-dom";
 import {
   useLocation,
@@ -78,19 +78,48 @@ const App = () => {
     console.log(todayDate);
     const quantity = getRandom(10, 15)
 
+    let startTime = 0
     const newTasks = [] 
 
+    while (newTasks.length < quantity) {
+      startTime = todayDate + getRandom(0, 22.5 * 3600000)
+      newTasks.push({startTime})
+      newTasks.filter((t, i) => (newTasks.indexOf(t) === i))
+      newTasks.sort(function (a, b) {
+        if (a.startTime > b.startTime) {
+          return 1;
+        }
+        if (a.startTime < b.startTime) {
+          return -1;
+        }
+        // a должно быть равным b
+        return 0;
+      });
+      startTime = newTasks[newTasks.length - 1].startTime + 10 * 60000 
+    }
+
     for (let i = 0; i < quantity; i++ ) {
-      const startTime = getRandom(0, 22.5 * 3600000)
-      const endTime = getRandom(10 * 60000, 90 * 60000)
-
-      const task = {
-        taskName: `Task ${i + 1}`,
-        startTime: todayDate + startTime,
-        endTime: todayDate + startTime + endTime
+      // const startTime = getRandom(0, 22.5 * 3600000)
+      
+      let maxLengthOfTask;
+      if (i === quantity - 1) {
+        maxLengthOfTask = 90 * 60000
+      } else {
+        if ( newTasks[i + 1].startTime - newTasks[i].startTime < 90 * 60000) {
+          maxLengthOfTask = newTasks[i + 1].startTime - newTasks[i].startTime 
+        } else {
+          maxLengthOfTask = 90 * 60000
+        }
       }
+      
+      const endTime = getRandom(10 * 60000, maxLengthOfTask)
 
-      newTasks.push(task)
+      newTasks[i] = {
+        ...newTasks[i],
+        taskName: `Task ${i + 1}`,
+        endTime: newTasks[i].startTime + getRandom(10 * 60000, maxLengthOfTask)
+      }
+  
     }
 
     dispatch(setTasks(newTasks))
@@ -107,12 +136,9 @@ const App = () => {
       }
       {startTime && <Button onClick={stopTimer}>STOP</Button>}
   
-      <Paper>
+      <AppBar position="static" color='primary'>
         <Tabs
           value={tabsValue}
-          indicatorColor="primary"
-          textColor="primary"
-          color="primary"
           onChange={handleTabsChange}
           aria-label="disabled tabs example"
           variant="fullWidth"
@@ -120,7 +146,7 @@ const App = () => {
           <Tab label="TASKS LOG" />
           <Tab label="TASKS CHART" />
         </Tabs>
-      </Paper>
+      </AppBar>
       
       {tabsValue === 0 && <>
         <Logs tasks={tasks} deleteTask={deleteTask}/>

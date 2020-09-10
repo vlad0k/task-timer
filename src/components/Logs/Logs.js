@@ -9,19 +9,20 @@ import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
+function msToHMS( ms ) {
+
+    var seconds = parseInt(ms / 1000);
+    var hours = parseInt( seconds / 3600 ); 
+    seconds = seconds % 3600; 
+    var minutes = parseInt( seconds / 60 );
+    seconds = seconds % 60;
+    return((hours < 10 ? `0${hours}` : hours)+":"+(minutes < 10 ? `0${minutes}` : minutes)+":"+(seconds < 10 ? `0${seconds}` : seconds));
+}
+
 const Logs = ({ tasks, deleteTask }) => {
 
-    function msToHMS( ms ) {
-
-        var seconds = parseInt(ms / 1000);
-        var hours = parseInt( seconds / 3600 ); 
-        seconds = seconds % 3600; 
-        var minutes = parseInt( seconds / 60 );
-        seconds = seconds % 60;
-        return((hours < 10 ? `0${hours}` : hours)+":"+(minutes < 10 ? `0${minutes}` : minutes)+":"+(seconds < 10 ? `0${seconds}` : seconds));
-    }
-
     return (
+        <Paper>
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
@@ -59,6 +60,7 @@ const Logs = ({ tasks, deleteTask }) => {
                 </TableBody>
             </Table>
         </TableContainer>
+        </Paper>
     );
 }
 

@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Label, CartesianGrid } from 'recharts';
 
-const data = [
-    {hour: 0, minutes: 0},
-    {hour: 1, minutes: 0},
-    {hour: 2, minutes: 15},
-    {hour: 3, minutes: 0},
-    {hour: 4, minutes: 0},
-    {hour: 5, minutes: 46},
-    {hour: 6, minutes: 30},
-    {hour: 7, minutes: 10},
-    {hour: 8, minutes: 0},
-    {hour: 9, minutes: 0},
-    {hour: 10, minutes: 0},
-    {hour: 11, minutes: 0},
-]
+// const data = [
+//     {hour: 0, minutes: 0},
+//     {hour: 1, minutes: 0},
+//     {hour: 2, minutes: 15},
+//     {hour: 3, minutes: 0},
+//     {hour: 4, minutes: 0},
+//     {hour: 5, minutes: 46},
+//     {hour: 6, minutes: 30},
+//     {hour: 7, minutes: 10},
+//     {hour: 8, minutes: 0},
+//     {hour: 9, minutes: 0},
+//     {hour: 10, minutes: 0},
+//     {hour: 11, minutes: 0},
+// ]
 
 const generateData = (data) => {
     if (!data) return []
@@ -78,16 +78,3 @@ const TasksChart = ({ tasks }) => {
 }
 
 export default TasksChart;
-
-const formatTimer = duration => {
-    let milliseconds = parseInt((duration%1000)/100)
-        , seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24)
-
-    hours = (hours < 10) ? `0${hours}` : hours
-    minutes = (minutes < 10) ? `0${minutes}` : minutes
-    seconds = (seconds < 10) ? `0${seconds}` : seconds
-
-    return {hours, minutes, seconds, milliseconds}
-}

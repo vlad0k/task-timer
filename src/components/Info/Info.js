@@ -19,7 +19,7 @@ const Info = ({ tasks, deleteTask }) => {
                     </Link>
                 </Toolbar> 
             </AppBar>
-            <div style={{marginTop: 48, padding: 16}}>
+            <div style={{ marginTop: 48, padding: 16 }}>
                 { tasks[id - 1] && <div>
                     <p>Name: {taskName}</p>
                     <p>Start Time: {new Date(startTime).toLocaleTimeString()}</p>
