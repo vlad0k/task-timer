@@ -17,41 +17,43 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Label, Car
 // ]
 
 const generateData = (data) => {
-    if (!data) return []
-
-    const today = (new Date()).toDateString;
-
-    data = data.filter(({startTime}) => (new Date(startTime)).toDateString === today)
-
-    const res = []
+    const res = [];
     for (let i = 0; i < 24; i++) res[i] = 0
 
     data.forEach( ({startTime, endTime}) => {
-
-        let startHour = (new Date(startTime)).getHours()
-        let startMinutes = (new Date(startTime)).getMinutes()
-
         let minutes = (endTime - startTime) / 60000
 
-        const maxForHour = []
+        const startHour = (new Date (startTime)).getHours()
+        const startMinutes = (new Date (startTime)).getMinutes()
 
-        for (let i = startHour; i < 24; i++) {
-            if (i === startHour) maxForHour[i] = 60 - startMinutes - res[i]
-            else maxForHour[i] = 60 - res[i]
+        const maxForStartHour = 60 - startMinutes
+        console.log(maxForStartHour);
+        if (minutes <= maxForStartHour) {
+            res[startHour] += minutes
+            minutes = 0
+        } else {
+            res[startHour] += maxForStartHour
+            minutes -= maxForStartHour
         }
 
-        for (let i = startHour; i < 24; i++) {
-            if ( minutes >= maxForHour[i] ) {
-                res[i] += maxForHour[i]
-                minutes -= maxForHour[i]
-            } else {
-                res[i] += minutes
+        let currentHour = startHour + 1;
+        console.log(minutes);
+        while (minutes < 0) {
+            const maxForCurrentHour = 60 - res[currentHour]
+
+            if (minutes <= maxForCurrentHour) {
+                res[currentHour] += minutes
                 minutes = 0
+            } else {
+                res[currentHour] += maxForCurrentHour
+                minutes = minutes - maxForCurrentHour
             }
+            console.log(minutes);
         }
+        console.log(res);
     })
 
-    return res.map((minutes, hour) => ({hour: +hour, minutes: Math.ceil(minutes)}))
+    return res.map((minutes, hour) => ({hour: hour, minutes: minutes}))
 }
 
 const TasksChart = ({ tasks }) => {

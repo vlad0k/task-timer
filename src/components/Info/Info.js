@@ -1,19 +1,18 @@
 import React from 'react'
 import { useRouteMatch, Link } from 'react-router-dom'
-import { Button, Dialog, Toolbar, IconButton,AppBar, Paper, List } from '@material-ui/core';
+import { Button, Dialog, Toolbar, IconButton,AppBar } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const Info = ({ tasks, deleteTask }) => {
-    console.log(tasks);
+
     let { params: { id } } = useRouteMatch()
     let {taskName, startTime, endTime} = tasks[id - 1] ? tasks[id - 1] : {}
-
     return (
         <Dialog fullScreen open={true}>
             <AppBar>
                 <Toolbar>
-                    <Link to='/'>
-                        <IconButton edge="start" color="inherit" aria-label="close">
+                    <Link to='/' style={{textDecoration: 'none', color: 'white'}}>
+                        <IconButton edge="start" color="secondary" aria-label="close">
                             <CloseIcon />
                         </IconButton>
                     </Link>

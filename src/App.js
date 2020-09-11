@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Paper, AppBar } from '@material-ui/core'
+import { AppBar } from '@material-ui/core'
 import { useHistory } from "react-router-dom";
 import {
   useLocation,
@@ -23,7 +23,7 @@ const App = () => {
   const [timer, setTimer] = useState({})
   const {pathname: path} = useLocation()
   const [tabsValue, setTabsValue] = useState(path === '/chart' ? 1 : 0)
-  const state = useSelector(state => state)
+  const { startTime, tasks, taskName } = useSelector(state => state)
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -32,8 +32,6 @@ const App = () => {
     history.push(routerValues[newValue])
     setTabsValue(newValue)
   }
-
-  const { startTime, tasks, taskName } = state;
   
   if (startTime && !timer.id) {
     const timerId = setInterval(() => {
@@ -42,7 +40,6 @@ const App = () => {
     })
     setTimer(prev => ({...prev, id: timerId}))
   }
-
 
   const startTimer = () => {
     dispatch(setStartTime(Date.now()))
@@ -92,14 +89,12 @@ const App = () => {
         if (a.startTime < b.startTime) {
           return -1;
         }
-        // a должно быть равным b
         return 0;
       });
       startTime = newTasks[newTasks.length - 1].startTime + 10 * 60000 
     }
 
     for (let i = 0; i < quantity; i++ ) {
-      // const startTime = getRandom(0, 22.5 * 3600000)
       
       let maxLengthOfTask;
       if (i === quantity - 1) {
@@ -111,8 +106,6 @@ const App = () => {
           maxLengthOfTask = 90 * 60000
         }
       }
-      
-      const endTime = getRandom(10 * 60000, maxLengthOfTask)
 
       newTasks[i] = {
         ...newTasks[i],
