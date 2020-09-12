@@ -1,63 +1,40 @@
 import * as React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Label, CartesianGrid } from 'recharts';
 
-// const data = [
-//     {hour: 0, minutes: 0},
-//     {hour: 1, minutes: 0},
-//     {hour: 2, minutes: 15},
-//     {hour: 3, minutes: 0},
-//     {hour: 4, minutes: 0},
-//     {hour: 5, minutes: 46},
-//     {hour: 6, minutes: 30},
-//     {hour: 7, minutes: 10},
-//     {hour: 8, minutes: 0},
-//     {hour: 9, minutes: 0},
-//     {hour: 10, minutes: 0},
-//     {hour: 11, minutes: 0},
-// ]
-
-const generateData = (data) => {
+export const generateData = (data) => {
     const res = [];
     for (let i = 0; i < 24; i++) res[i] = 0
 
     data.forEach( ({startTime, endTime}) => {
-        let minutes = (endTime - startTime) / 60000
-
+        
         const startHour = (new Date (startTime)).getHours()
         const startMinutes = (new Date (startTime)).getMinutes()
 
-        const maxForStartHour = 60 - startMinutes
-        console.log(maxForStartHour);
-        if (minutes <= maxForStartHour) {
-            res[startHour] += minutes
-            minutes = 0
-        } else {
-            res[startHour] += maxForStartHour
-            minutes -= maxForStartHour
+        const endHour = (new Date (endTime)).getHours()
+        const endMinutes = (new Date (endTime)).getMinutes()
+
+        if (startHour === endHour) {
+            res[startHour] += (endMinutes - startMinutes)
         }
 
-        let currentHour = startHour + 1;
-        console.log(minutes);
-        while (minutes < 0) {
-            const maxForCurrentHour = 60 - res[currentHour]
-
-            if (minutes <= maxForCurrentHour) {
-                res[currentHour] += minutes
-                minutes = 0
-            } else {
-                res[currentHour] += maxForCurrentHour
-                minutes = minutes - maxForCurrentHour
+        if (endHour > startHour) {
+            let currentHour = startHour
+            res[currentHour] += (60 - startMinutes)
+            currentHour += 1
+            while (currentHour !== endHour) {
+                res[currentHour] = 60
+                currentHour += 1
             }
-            console.log(minutes);
+            res[currentHour] += endMinutes
         }
-        console.log(res);
     })
 
-    return res.map((minutes, hour) => ({hour: hour, minutes: minutes}))
+    return res.map((minutes, hour) => ({hour: hour, minutes: minutes}))  
 }
 
 const TasksChart = ({ tasks }) => {
     const data = generateData(tasks)
+    
     return (
         <div style={{width: '100%', height: '55vh', padding: 8}}>
             <ResponsiveContainer>

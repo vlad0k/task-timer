@@ -91,7 +91,7 @@ const App = () => {
         }
         return 0;
       });
-      startTime = newTasks[newTasks.length - 1].startTime + 10 * 60000 
+      startTime = newTasks[newTasks.length - 1].endTime + 10 * 60000 
     }
 
     for (let i = 0; i < quantity; i++ ) {
