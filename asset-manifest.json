@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/task-timer/static/css/main.9754a306.chunk.css",
-    "main.js": "/task-timer/static/js/main.b064c19c.chunk.js",
-    "main.js.map": "/task-timer/static/js/main.b064c19c.chunk.js.map",
+    "main.js": "/task-timer/static/js/main.790c11ef.chunk.js",
+    "main.js.map": "/task-timer/static/js/main.790c11ef.chunk.js.map",
     "runtime-main.js": "/task-timer/static/js/runtime-main.aa04110a.js",
     "runtime-main.js.map": "/task-timer/static/js/runtime-main.aa04110a.js.map",
     "static/js/2.38ace5c2.chunk.js": "/task-timer/static/js/2.38ace5c2.chunk.js",
     "static/js/2.38ace5c2.chunk.js.map": "/task-timer/static/js/2.38ace5c2.chunk.js.map",
     "index.html": "/task-timer/index.html",
-    "precache-manifest.2f41b9ecea1faa2baf28e62207f50b67.js": "/task-timer/precache-manifest.2f41b9ecea1faa2baf28e62207f50b67.js",
+    "precache-manifest.d5f3a293b8a8255e571038f7b18ff5ee.js": "/task-timer/precache-manifest.d5f3a293b8a8255e571038f7b18ff5ee.js",
     "service-worker.js": "/task-timer/service-worker.js",
     "static/css/main.9754a306.chunk.css.map": "/task-timer/static/css/main.9754a306.chunk.css.map",
     "static/js/2.38ace5c2.chunk.js.LICENSE.txt": "/task-timer/static/js/2.38ace5c2.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.aa04110a.js",
     "static/js/2.38ace5c2.chunk.js",
     "static/css/main.9754a306.chunk.css",
-    "static/js/main.b064c19c.chunk.js"
+    "static/js/main.790c11ef.chunk.js"
   ]
 }
