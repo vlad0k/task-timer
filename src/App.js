@@ -40,9 +40,7 @@ export const generateTasks = () => {
     let maxLength;
     if (i < startPoints.length -1) maxLength = (startPoints[i + 1] - sp) < 90 ? (startPoints[i + 1] - sp) : 90
     else maxLength = maxLength = 90
-    const ep = sp + getRandom(10, maxLength)
-
-    return ep
+    return sp + getRandom(10, maxLength)
   })
 
   const todayDate = (new Date( (new Date()).toDateString() )).getTime()
@@ -112,9 +110,7 @@ const App = () => {
       
       <Clock timer={timer.time}/>
 
-      {!startTime && <Button onClick={startTimer}>START</Button>
-
-      }
+      {!startTime && <Button onClick={startTimer}>START</Button>}
       {startTime && <Button onClick={stopTimer}>STOP</Button>}
   
       <AppBar position="static" color='primary'>
