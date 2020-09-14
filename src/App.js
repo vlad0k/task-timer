@@ -19,6 +19,101 @@ import Logs from './components/Logs/Logs';
 import Chart from './components/Chart/Chart';
 import Info from './components/Info/Info';
 
+const getRandom = (min, max) => (Math.floor(Math.random() * (max - min) ) + min)
+
+// export const generateTasks = () => {
+//   const todayDate = (new Date( (new Date()).toDateString() )).getTime()
+
+//   const quantity = getRandom(10, 15)
+
+//   let startTime = 0
+//   let newTasks = [] 
+
+//   while (newTasks.length < quantity) {
+//     startTime = todayDate + getRandom(0, 22.5 * 3600000)
+//     newTasks.push({startTime})
+//     newTasks.filter((t, i) => (newTasks.indexOf(t) === i))  
+//     newTasks = newTasks.sort((a, b) => {
+//       if (a.startTime > b.startTime) {
+//         return 1;
+//       }
+//       if (a.startTime < b.startTime) {
+//         return -1;
+//       }
+//       return 0;
+//     })
+//     newTasks = anewTasks.filter((t, i) => {
+//       if (i === 0) {
+//         return true;
+//       }
+//       if (newTasks[i - 1] - t < 10 * 60000) {
+//         return false
+//       }
+//       return true
+//     })
+//   }
+  
+
+//   for (let i = 0; i < quantity; i++ ) {
+    
+//     let maxLengthOfTask;
+//     if (i === quantity - 1) {
+//       maxLengthOfTask = 90 * 60000
+//     } else {
+//       if ( newTasks[i + 1].startTime - newTasks[i].startTime < 90 * 60000) {
+//         maxLengthOfTask = newTasks[i + 1].startTime - newTasks[i].startTime 
+//       } else {
+//         maxLengthOfTask = 90 * 60000
+//       }
+//     }
+
+//     newTasks[i] = {
+//       ...newTasks[i],
+//       taskName: `Task ${i + 1}`,
+//       endTime: newTasks[i].startTime + getRandom(10 * 60000, maxLengthOfTask)
+//     }
+
+//   }
+//   return newTasks
+// }
+
+
+export const generateTasks = () => {
+  let startPoints = []
+  const numberOfStartPoints = getRandom(10, 15)
+
+  while (startPoints.length !== numberOfStartPoints) {
+    startPoints.push( Math.random() * 1440 )
+    startPoints.sort( (prev, next) => (next > prev) ? -1 : 1)
+    startPoints = startPoints.filter( (t, i, arr) => {
+      if (i === 0) return true
+      if ( (t - arr[i - 1]) < 10) return false
+      if ( i === (arr.length - 1) && (1440 - t) < 10) return false
+      return true
+    })
+  }
+
+  const endPoints = startPoints.map((sp, i) => {
+    let maxLength;
+    if (i < startPoints.length -1) maxLength = (startPoints[i + 1] - sp) < 90 ? (startPoints[i + 1] - sp) : 90
+    else maxLength = maxLength = 90
+    const ep = sp + getRandom(10, maxLength)
+
+    return ep
+  })
+
+  const todayDate = (new Date( (new Date()).toDateString() )).getTime()
+
+  const tasks = startPoints.map( (sp, i) => ({
+    taskName: `Task ${i + 1}`,
+    startTime: todayDate + sp * 60000,
+    endTime: todayDate + endPoints[i] * 60000
+  }))
+
+  return tasks
+}
+
+
 const App = () => {
   const [timer, setTimer] = useState({})
   const {pathname: path} = useLocation()
@@ -68,56 +163,6 @@ const App = () => {
     dispatch(setTasks(newTasks))
   }
 
-  const getRandom = (min, max) => (Math.floor(Math.random() * (max - min) ) + min)
-
-  const generateTasks = () => {
-    const todayDate = (new Date( (new Date()).toDateString() )).getTime()
-    console.log(todayDate);
-    const quantity = getRandom(10, 15)
-
-    let startTime = 0
-    const newTasks = [] 
-
-    while (newTasks.length < quantity) {
-      startTime = todayDate + getRandom(0, 22.5 * 3600000)
-      newTasks.push({startTime})
-      newTasks.filter((t, i) => (newTasks.indexOf(t) === i))
-      newTasks.sort(function (a, b) {
-        if (a.startTime > b.startTime) {
-          return 1;
-        }
-        if (a.startTime < b.startTime) {
-          return -1;
-        }
-        return 0;
-      });
-      startTime = newTasks[newTasks.length - 1].endTime + 10 * 60000 
-    }
-
-    for (let i = 0; i < quantity; i++ ) {
-      
-      let maxLengthOfTask;
-      if (i === quantity - 1) {
-        maxLengthOfTask = 90 * 60000
-      } else {
-        if ( newTasks[i + 1].startTime - newTasks[i].startTime < 90 * 60000) {
-          maxLengthOfTask = newTasks[i + 1].startTime - newTasks[i].startTime 
-        } else {
-          maxLengthOfTask = 90 * 60000
-        }
-      }
-
-      newTasks[i] = {
-        ...newTasks[i],
-        taskName: `Task ${i + 1}`,
-        endTime: newTasks[i].startTime + getRandom(10 * 60000, maxLengthOfTask)
-      }
-  
-    }
-
-    dispatch(setTasks(newTasks))
-  }
-
   return (
     <div className="App">
       <TextField value={taskName} onChange={(e) => dispatch(setTaskName(e.target.value))} id="standard-basic" label="Name of your task" />
@@ -144,7 +189,10 @@ const App = () => {
       {tabsValue === 0 && <>
         <Logs tasks={tasks} deleteTask={deleteTask}/>
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
-          <Button onClick={() => generateTasks()}>GENERATE</Button>
+          <Button onClick={() => {
+            const newTasks = generateTasks()
+            dispatch(setTasks(newTasks))
+          }}>GENERATE</Button>
         </div>
       </>}
       {tabsValue === 1 && <Chart tasks={tasks} />}

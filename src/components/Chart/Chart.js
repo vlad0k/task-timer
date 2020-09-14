@@ -2,9 +2,8 @@ import * as React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Label, CartesianGrid } from 'recharts';
 
 export const generateData = (data) => {
-    const res = [];
-    for (let i = 0; i < 24; i++) res[i] = 0
-
+    const res = [...new Array(24).keys()].map(() => 0);
+    
     data.forEach( ({startTime, endTime}) => {
         
         const startHour = (new Date (startTime)).getHours()
