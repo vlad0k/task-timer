@@ -22,10 +22,11 @@ import Info from './components/Info/Info';
 const getRandom = (min, max) => (Math.floor(Math.random() * (max - min) ) + min)
 
 export const generateTasks = () => {
-  let startPoints = []
-  const numberOfStartPoints = getRandom(10, 15)
 
-  while (startPoints.length !== numberOfStartPoints) {
+  const generateStartPoints = (numberOfStartPoints = getRandom(10, 15), startPoints = []) => {
+
+    if (startPoints.length === numberOfStartPoints) return startPoints
+    
     startPoints.push( Math.random() * 1440 )
     startPoints.sort( (prev, next) => (next > prev) ? -1 : 1)
     startPoints = startPoints.filter( (t, i, arr) => {
@@ -34,7 +35,11 @@ export const generateTasks = () => {
       if ( i === (arr.length - 1) && (1440 - t) < 10) return false
       return true
     })
+    
+    return generateStartPoints(numberOfStartPoints, startPoints);
   }
+
+  const startPoints = generateStartPoints()
 
   const endPoints = startPoints.map((sp, i) => {
     let maxLength;
