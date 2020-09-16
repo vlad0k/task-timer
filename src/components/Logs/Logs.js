@@ -1,4 +1,6 @@
 import React from 'react';
+
+// material-ui
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -6,8 +8,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+
+// react-router
 import { Link } from 'react-router-dom'
+
+// redux
+import { useSelector } from 'react-redux'
+
+// components
+import DeleteButton from '../DeleteButton/DeleteButton'
 
 function msToHMS( ms ) {
 
@@ -19,11 +29,12 @@ function msToHMS( ms ) {
     return((hours < 10 ? `0${hours}` : hours)+":"+(minutes < 10 ? `0${minutes}` : minutes)+":"+(seconds < 10 ? `0${seconds}` : seconds));
 }
 
-const Logs = ({ tasks, deleteTask }) => {
+const Logs = () => {
+
+    const tasks = useSelector( state => state.tasks )
 
     return (
-        <Paper>
-        <TableContainer component={Paper}>
+        <TableContainer style={{ width: '100%' }} component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -46,21 +57,20 @@ const Logs = ({ tasks, deleteTask }) => {
                             <TableCell component="th" scope="row">
                                 {row.taskName}
                             </TableCell>
-                            <TableCell align="right">{new Date(row.startTime).toLocaleTimeString()}</TableCell>
-                            <TableCell align="right">{new Date(row.endTime).toLocaleTimeString()}</TableCell>
-                            <TableCell align="right">{msToHMS(row.endTime - row.startTime) }</TableCell>
+                            <TableCell align="right">{ new Date(row.startTime).toLocaleTimeString() }</TableCell>
+                            <TableCell align="right">{ new Date(row.endTime).toLocaleTimeString() }</TableCell>
+                            <TableCell align="right">{ msToHMS(row.endTime - row.startTime) }</TableCell>
                             <TableCell align="right">
-                            <Link to={`/tasks/${i + 1}`}><Button>INFO</Button></Link>
+                            <Link to={`/tasks/${i + 1}`}><Button color="primary">INFO</Button></Link>
                             </TableCell>
                             <TableCell align="right">
-                                <Button onClick={() => deleteTask(row)}>DELETE</Button>
+                                <DeleteButton task={row}>DELETE</DeleteButton>
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
-        </Paper>
     );
 }
 

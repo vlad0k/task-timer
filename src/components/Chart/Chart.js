@@ -1,5 +1,14 @@
 import * as React from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList, Label, CartesianGrid } from 'recharts';
+import { 
+    BarChart, 
+    Bar, 
+    XAxis, 
+    YAxis, 
+    ResponsiveContainer, 
+    LabelList, 
+    Label, 
+    CartesianGrid 
+} from 'recharts';
 
 export const generateData = (data) => {
     const res = [...new Array(24).keys()].map(() => 0);

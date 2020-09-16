@@ -1,21 +1,14 @@
 import React from 'react'
 import style from './Clock.module.css'
 
-const formatTimer = timer => {
-    let milliseconds = parseInt((timer%1000)/100)
-        , seconds = parseInt((timer/1000)%60)
-        , minutes = parseInt((timer/(1000*60))%60)
-        , hours = parseInt((timer/(1000*60*60))%24)
+import { createTimer, msToHMS } from '../../utils/timer-utils'
 
-    hours = (hours < 10) ? `0${hours}` : hours
-    minutes = (minutes < 10) ? `0${minutes}` : minutes
-    seconds = (seconds < 10) ? `0${seconds}` : seconds
+const Clock = ({ startTime, timer, setTimer }) => {
+    
+    createTimer(startTime, timer.id, setTimer)
 
-    return {hours, minutes, seconds, milliseconds}
-}
+    const { hours, minutes, seconds } = msToHMS(timer.time)
 
-const Clock = ({timer = 0}) => {
-    const { hours, minutes, seconds } = formatTimer(timer)
     return (
         <div className={style.Clock}>
             <span>{hours}:{minutes}:{seconds}</span>

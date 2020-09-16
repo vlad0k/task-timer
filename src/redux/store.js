@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'
 
-import reducer from './reducers'
+import reducer from './app-reducer'
 
 const localStorage = window.localStorage
 
