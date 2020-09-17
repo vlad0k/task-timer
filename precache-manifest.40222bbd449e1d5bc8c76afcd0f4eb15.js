@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4552dbc5049d35c5ca8c39e5bb15c35b",
+    "revision": "f60d6a1211ed6432dd1c9b3ba8952b5e",
     "url": "/task-timer/index.html"
   },
   {
-    "revision": "6851dbdfb5866bbb435e",
+    "revision": "d87069740553564bbe59",
     "url": "/task-timer/static/css/main.7f4b38cc.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/task-timer/static/js/2.0f98cb72.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6851dbdfb5866bbb435e",
-    "url": "/task-timer/static/js/main.851c4465.chunk.js"
+    "revision": "d87069740553564bbe59",
+    "url": "/task-timer/static/js/main.6aee31d0.chunk.js"
   },
   {
     "revision": "ca42757cdb1e8ef0c6aa",
