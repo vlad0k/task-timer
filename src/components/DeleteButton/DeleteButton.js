@@ -1,38 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux'
-import { deleteTask } from '../../redux/app-reducer'
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../../redux/appReducer';
 
-import {
-  Button,
-  Dialog,
-  Slide,
-  DialogActions,
-  DialogContent,
-} from '@material-ui/core'
+import { Button, Dialog, Slide, DialogActions, DialogContent } from '@material-ui/core';
 
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const DeleteButton = ({ task, children }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const history = useHistory()
+  const history = useHistory();
 
   const handleDeleteButton = () => {
-    dispatch(deleteTask(task))
-    setOpen(false)
-    history.push('/')
-  }
+    dispatch(deleteTask(task));
+    setOpen(false);
+    history.push('/');
+  };
 
-  const handleClose = () => setOpen(false)
+  const handleClose = () => setOpen(false);
 
-  const handleOpenDialog = () => setOpen(true)
+  const handleOpenDialog = () => setOpen(true);
 
   return (
     <>
@@ -61,7 +55,7 @@ const DeleteButton = ({ task, children }) => {
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default DeleteButton
+export default DeleteButton;

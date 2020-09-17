@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@material-ui/core';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setTaskName } from '../../redux/app-reducer';
+import { setTaskName } from '../../redux/appReducer';
 
 import useDebounced from '../../hooks/useDebounced';
 

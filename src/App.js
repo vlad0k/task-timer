@@ -3,7 +3,7 @@ import './App.css';
 
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import { startTimer, stopTimer, setTasks } from './redux/app-reducer';
+import { startTimer, stopTimer, setTasks } from './redux/appReducer';
 
 // material-ui
 import Button from '@material-ui/core/Button';
@@ -23,6 +23,7 @@ import Dialog from './components/Dialog/Dialog';
 
 // utils
 import generateTasks from './utils/generateTasks';
+import { createTimer } from './utils/timerUtils';
 
 const App = () => {
   const [timer, setTimer] = useState({ id: null, time: null });
@@ -30,6 +31,8 @@ const App = () => {
 
   const { startTime, tasks, taskName } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  createTimer(startTime, timer.id, setTimer);
 
   const onStartButtonPress = () => {
     dispatch(startTimer());
@@ -64,7 +67,7 @@ const App = () => {
       <Route path={['/', '/chart']} exact>
         <TaskNameInput />
 
-        <Clock timer={timer} startTime={startTime} setTimer={setTimer} />
+        <Clock time={timer.time} />
 
         <div style={{ paddingBottom: 12 }}>
           {!startTime && (

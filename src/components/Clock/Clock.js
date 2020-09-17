@@ -1,12 +1,10 @@
-import React from 'react'
-import style from './Clock.module.css'
+import React from 'react';
+import style from './Clock.module.css';
 
-import { createTimer, msToHMS } from '../../utils/timerUtils'
+import { msToHMS } from '../../utils/timerUtils';
 
-const Clock = ({ startTime, timer, setTimer }) => {
-  createTimer(startTime, timer.id, setTimer)
-
-  const { hours, minutes, seconds } = msToHMS(timer.time)
+const Clock = ({ time }) => {
+  let { hours, minutes, seconds } = msToHMS(time);
 
   return (
     <div className={style.Clock}>
@@ -14,7 +12,7 @@ const Clock = ({ startTime, timer, setTimer }) => {
         {hours}:{minutes}:{seconds}
       </span>
     </div>
-  )
-}
+  );
+};
 
-export default Clock
+export default Clock;

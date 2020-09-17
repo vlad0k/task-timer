@@ -1,24 +1,24 @@
-import React from 'react'
+import React from 'react';
 
-import { useRouteMatch, Link } from 'react-router-dom'
+import { useRouteMatch, Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
-import DeleteButton from '../DeleteButton/DeleteButton'
+import DeleteButton from '../DeleteButton/DeleteButton';
 
-import { Paper, Toolbar, IconButton, AppBar } from '@material-ui/core'
+import { Paper, Toolbar, IconButton, AppBar } from '@material-ui/core';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const Info = () => {
-  const tasks = useSelector((state) => state.tasks)
+  const tasks = useSelector((state) => state.tasks);
 
   let {
     params: { id },
-  } = useRouteMatch()
-  let { taskName, startTime, endTime } = tasks[id - 1] ? tasks[id - 1] : {}
+  } = useRouteMatch();
+  let { taskName, startTime, endTime } = tasks[id - 1] ? tasks[id - 1] : {};
   return (
-    <Paper fullScreen open={true}>
+    <Paper open={true}>
       <AppBar>
         <Toolbar>
           <Link to="/" style={{ textDecoration: 'none' }}>
@@ -40,7 +40,7 @@ const Info = () => {
         {!tasks[id - 1] && <div>Error! No such task #{id}!</div>}
       </div>
     </Paper>
-  )
-}
+  );
+};
 
-export default Info
+export default Info;

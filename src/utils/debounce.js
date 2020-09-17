@@ -1,9 +1,9 @@
 const debounce = (f, ms) => {
-  let timeout
+  let timeout;
   return (...args) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => f(...args), ms)
-  }
-}
+    clearTimeout(timeout);
+    timeout = setTimeout(() => f.apply(this, args), ms);
+  };
+};
 
-export default debounce
+export default debounce;
