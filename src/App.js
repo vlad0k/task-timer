@@ -56,6 +56,11 @@ const App = () => {
   
   }
 
+  const onGenerateButtonPress = () => {
+    const newTasks = generateTasks()
+    dispatch(setTasks(newTasks))
+  }
+
   return (
     <div className="App">
       <Route path={['/', '/chart']} exact>
@@ -90,10 +95,7 @@ const App = () => {
           <Button
             style={{ marginTop: 16 }} 
             variant="outlined"
-            onClick={() => {
-              const newTasks = generateTasks()
-              dispatch(setTasks(newTasks))
-            }}
+            onClick={onGenerateButtonPress}
           >
             GENERATE
           </Button>
