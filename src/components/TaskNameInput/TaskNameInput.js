@@ -13,7 +13,7 @@ const TaskNameInput = () => {
 
   const [value, setValue] = useState(taskName);
 
-  const debouncedDispatch = useDebounced((nextValue) => dispatch(setTaskName(nextValue)), 400);
+  const debouncedDispatch = useDebounced((nextValue) => dispatch(setTaskName(nextValue)), 180);
 
   useEffect(() => {
     setValue(taskName);
